@@ -1,0 +1,15 @@
+metadata={"testAim":"only wildcard should match if no type set"}
+payload_string=*all-matches* specific-no-matches specific-matches
+
+metadata={"testAim":"payload mutated if type matches, 1","sag.type":"mypackage.MessageType1"}
+payload_string=*all-matches* specific-no-matches *specific-matches*
+
+metadata={"testAim":"payload mutated if type matches, 2","sag.type":"mypackage.MessageType2"}
+payload_string=*all-matches* specific-no-matches *specific-matches*
+
+metadata={"testAim":"payload not mutated and type coersion not applied if does not match","sag.type":"mypackage.MessageTypeDoesNotMatch"}
+payload_json=1234
+
+metadata={"testAim":"final message"}
+payload_string=
+

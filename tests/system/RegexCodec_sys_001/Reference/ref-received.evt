@@ -1,0 +1,5 @@
+com.softwareag.samples.Test("12345","<number>")
+com.softwareag.samples.Test("abc 1234 def 567 ghi","abc <number> def <number> ghi")
+com.softwareag.samples.Test("foo bar","foo bar")
+com.softwareag.samples.Test("","")
+com.softwareag.samples.Test("final message","final message")

@@ -1,0 +1,27 @@
+package com.softwareag.samples;
+
+using com.softwareag.connectivity.ConnectivityPlugins;
+
+event Test {
+	string input;
+	string output;
+}
+
+event Output {
+	string value;
+}
+
+monitor Simple {
+	ConnectivityPlugins connectivity;
+	
+	action onload() {
+		Test test;
+		on all Test():test {
+			log "Received: "+test.toString();
+			send test to "received";
+			send Output(test.output) to "data";
+		}
+		
+		connectivity.onApplicationInitialized();
+	}
+}

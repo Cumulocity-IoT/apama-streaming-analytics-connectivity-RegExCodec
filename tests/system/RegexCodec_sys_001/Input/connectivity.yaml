@@ -1,0 +1,26 @@
+plugins:
+  FileTransport:
+    classpath:
+      - ${APAMA_WORK}/lib/file-transport-plugins.jar
+    class: com.softwareag.samples.FileTransport
+   
+  RegexCodec:
+    classpath: ${APAMA_WORK}/lib/regex-codec.jar
+    class: com.softwareag.samples.RegexCodec
+
+
+startChains:
+  testChain:
+    - apama.eventMap:
+        defaultEventType: com.softwareag.samples.Test
+        subscribeChannels:
+          - data
+          
+    - RegexCodec:
+        regex: "[0-9]+"
+        repl: <number>
+        keys: ["payload"]
+
+    - FileTransport:
+        hostToFile: output.txt
+        fileToHost: input.txt

@@ -1,0 +1,49 @@
+plugins:
+  FileTransport:
+    classpath:
+      - ${APAMA_WORK}/lib/file-transport-plugins.jar
+    class: com.softwareag.samples.FileTransport
+   
+  RegexCodec:
+    classpath: ${APAMA_WORK}/lib/regex-codec.jar
+    class: com.softwareag.samples.RegexCodec
+
+
+startChains:
+  testChain:
+    - apama.eventMap:
+        defaultEventType: com.softwareag.samples.Test
+        subscribeChannels:
+          - data
+
+    - RegexCodec:
+        regex: "([0-9]+)"
+        repl: "numberTowardsHost<$1>"
+        direction: towardsHost
+        keys: ["payload"]
+
+    - RegexCodec:
+        regex: "([0-9]+)"
+        repl: "numberTowardsTransport<$1>"
+        direction: towardsTransport
+        keys: ["payload.value"]
+
+    # this instance is not actually used by this testcase, but useful to demo the supported functionality
+    - RegexCodec: 
+        regex: "(group1)[a-z](group2)"
+        repl: "got '$1' and '$2'"
+        flags: # any constant defined on the java.util.regex.Pattern class
+         - CASE_INSENSITIVE
+         - MULTILINE
+        #- LITERAL
+        keys: # any primitive value inside a map can be specified (including values from a map inside a list)
+         - metadata.myheader1
+         - payload.map1key.map2key.map3keyX
+         - payload.map1key.map2key.map3keyY
+        direction: bidirectional
+        hostMessageTypes: # applies to all types if not specified
+         - com.softwareag.samples.MyEvent
+        
+    - FileTransport:
+        hostToFile: output.txt
+        fileToHost: input.txt

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="copy" basedir="." name="Connectivity plugin build">
+	<presetdef name="javac">
+		<javac includeantruntime="false" />
+	</presetdef>
+
+	<property environment="env"/>
+	<property name="APAMA_HOME" location="${env.APAMA_HOME}"/>
+	<fail unless="env.APAMA_HOME" message="Please run the bin/apama_env script before attempting to build this sample."/>
+
+	<property name="output-dir" location="${basedir}/build-output"/>
+	<property name="output-jar" location="${output-dir}/regex-codec.jar"/>
+	<tstamp/>
+
+	<path id="plugin-classpath">
+		<fileset dir="${APAMA_HOME}/lib">
+			<include name ="connectivity-plugins-api.jar"/>
+		</fileset>
+	</path>
+	<pathconvert property="plugin-classpath.prop" refid="plugin-classpath" pathsep=" ">
+		<flattenmapper/>
+	</pathconvert>
+
+	<target name="clean">
+		<delete dir="${output-dir}"/>
+	</target>
+	
+	<!-- Targets for building -->
+	<target name="build" description="Build plugin" depends="clean">
+		<delete dir="${output-dir}/work"/>
+		<mkdir dir="${output-dir}/work"/>
+		
+		<javac srcdir="${basedir}/src" destdir="${output-dir}/work" debug="true">
+			<classpath refid="plugin-classpath"/>
+		</javac>
+
+		<jar jarfile="${output-jar}">
+			<fileset dir="${output-dir}/work" includes="**/*.class"/>
+			<manifest>
+				<attribute name="Implementation-Title" value="Regular Expressions Connectivity Codec Plug-in"/>
+				<attribute name="Implementation-Version" value="v1.0 (${TODAY})"/> 
+				<attribute name="Class-Path" value="${plugin-classpath.prop}"/>
+			</manifest>
+		</jar>
+	</target>
+	
+	<target name="copy" description="Build plugin and copy to APAMA_WORK/lib" depends="build">
+		<copy file="${output-jar}" todir="${env.APAMA_WORK}/lib/"/>
+	</target>
+</project>

@@ -1,0 +1,30 @@
+package com.softwareag.samples;
+
+using com.softwareag.connectivity.ConnectivityPlugins;
+
+event Test {
+	string input;
+	string output;
+}
+
+event Output {
+	string value;
+}
+
+monitor Simple {
+	ConnectivityPlugins connectivity;
+	
+	action onload() {
+		Test test;
+		on all Test():test {
+			log "Received: "+test.toString();
+			send test to "received";
+		}
+		
+		connectivity.onApplicationInitialized();
+
+		// Send Output events to the data channel the RegEx Plugin is registered for
+		send Output("a 123 b") to "data";
+		send Output("final message") to "data";
+	}
+}
