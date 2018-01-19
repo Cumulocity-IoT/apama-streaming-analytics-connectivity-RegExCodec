@@ -61,10 +61,8 @@ Should you wish to run directly
 
 3. Inject the Connectivity plugins support monitor:
 
-> (Linux) engine_inject $APAMA_HOME/monitors/ConnectivityPluginsControl.mon $APAMA_HOME/monitors/ConnectivityPluginsControl.mon
 > (Linux) engine_inject $APAMA_HOME/monitors/ConnectivityPluginsControl.mon $APAMA_HOME/monitors/ConnectivityPlugins.mon
 
-> (Windows) engine_inject %APAMA_HOME%/monitors/ConnectivityPluginsControl.mon %APAMA_HOME%/monitors/ConnectivityPluginsControl.mon
 > (Windows) engine_inject %APAMA_HOME%/monitors/ConnectivityPluginsControl.mon %APAMA_HOME%/monitors/ConnectivityPlugins.mon
 
 4. Inject the Test monitor:
