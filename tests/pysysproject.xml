@@ -1,17 +1,56 @@
 <?xml version="1.0" standalone="yes"?>
 <pysysproject>
-		
+
+	<!--
+	Specify a minimum required pysys version to run these tests
+	-->
+	<requires-pysys>1.3.0</requires-pysys>
+
+
+	<!--
+	Specify a minimum required python version to run these tests
+	-->
+	<requires-python>3.6.6</requires-python>
+
+
 	<!-- 
 	Get a reference to the environment, which can then be used as a substitution variable 
 	within the project file
 	-->
 	<property environment="env"/>
+
 	
 	<!-- 
 	Get a reference to the osfamily, which can then be used as a substitution variable 
 	within the project file
 	-->
 	<property osfamily="osfamily"/>
+
+
+	<!-- 
+	Controls whether tests will abort as a fail as soon as an assert, process, or wait operation
+	completes with errors. The default value as specified below will be used when the abortOnError 
+	parameter to the function is not specified. 
+	-->
+	<property name="defaultAbortOnError" value="true"/>
+
+
+	<!-- 
+	Controls whether by default tests will report a failure outcome when a process completes with 
+	a non-zero return code. The default value as specified below will be used when the ignoreExitStatus 
+	parameter to the function is not specified. 
+	-->
+	<property name="defaultIgnoreExitStatus" value="false"/>
+
+
+	<!-- 
+	Import properties from file (fails silently if the file does not exist). The imported 
+	file should be of the format name=value (one pair specified per line). Any imported names
+	can again be used as a substitution variables within the project file, and are also set as 
+	attributes to the project class. The value in the imported file can be defined to use 
+	substitution through the ${variable} syntax (where variable must be defined before the import
+	-->
+	<property file="${osfamily}.properties" />
 
 
 	<!-- 
@@ -22,30 +61,50 @@
 	<!-- Set apama project details from the environment -->
 	<property name="APAMA_HOME"              value="${env.APAMA_HOME}"/>
 	<property name="APAMA_WORK"              value="${env.APAMA_WORK}"/>
-	<property name="APAMA_COMMON_JRE"        value="${env.APAMA_JRE}"/>
+	<property name="APAMA_COMMON_JRE"        value="${env.APAMA_JRE}"/> 
+
+	<!-- Specify a property for the location of the application being tested. 
+	Binaries and configuration files can be specified relative to this directory 
+	to avoid having to hardcode locations inside each individual testcase. 
+	-->
+	<property name="TEST_SUBJECT_DIR"           value="${env.PYSYS_TEST_SUBJECT_DIR}" default="${root}/.."/>
 
 	<!-- Configuration to determine how these tests run -->
 	<property name="shutdownApamaComponentsAfterTest" value="true"/>
 	<property name="verboseWaitForSignal" value="true"/>
-	<property name="defaultAbortOnError" value="true"/>
-	<property name="defaultApamaIgnoreExitStatus" value="false"/>
 
 	<!-- 
-	Import properties from file (fails silently if the file does not exist). The imported 
-	file should be of the format name=value (one pair specified per line). Any imported names
-	can again be used as a substitution variables within the project file, and are also set as 
-	attributes to the project class. The value in the imported file can be defined to use 
-	substitution through the ${variable} syntax (where variable must be defined before the import
-	 -->
-	<property file="${osfamily}.properties" />
-	
-	<!-- 
-	Use a custom runner class that extends the BaseRunner class distributed with PySys. Extensions to 
-	the BaseRunner are used to define custom setup and tear down operations before running the set of 
-	selected tests (e.g. to load test data into a relational database prior to the test runs, and then 
-	clear out the data on completion), as well as to defined operations between the execution of individual 
-	tests and after completion of a cycle of tests. 
+	Use a custom runner class that extends the BaseRunner class distributed with PySys, 
+	adding support for features such as code coverage.
 	-->
 	<runner classname="ApamaRunner" module="apama.runner"/>
+
+	<writers>
+		<!--
+		Writes output compatible with the JUnit XML format.
+		-->
+		<writer classname="JUnitXMLResultsWriter" module="pysys.writer">
+			<property name="outputDir" value="${root}/junit-report"/>
+		</writer>
+		
+		<!-- The ConsoleSummaryResultsWriter displays a summary of non-passed outcomes at the end of the test run, 
+			optionally including outcome reason. 
+		-->		
+		<writer classname="ConsoleSummaryResultsWriter" module="pysys.writer">
+			<property name="showOutputDir" value="false"/>
+			<property name="showOutcomeReason" value="true"/>
+		</writer>
+	</writers>
 	
+	
+	<formatters>
+		<formatter classname="ColorLogFormatter" module="pysys.utils.logutils"
+				name="stdout" messagefmt="%(asctime)s %(levelname)-5s %(message)s" datefmt="%H:%M:%S"
+		>
+			<property name="color" value="true"/>
+		</formatter>
+		<formatter classname="BaseLogFormatter" module="pysys.utils.logutils"
+				name="runlog" messagefmt="%(asctime)s %(levelname)-5s %(message)s" datefmt=""/>
+	</formatters>
+
 </pysysproject>

@@ -18,10 +18,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
 
+
 import com.softwareag.connectivity.AbstractSimpleCodec;
 import com.softwareag.connectivity.Message;
 import com.softwareag.connectivity.PluginConstructorParameters.CodecConstructorParameters;
 import com.softwareag.connectivity.util.MapExtractor;
+
 
 /**
  * Performs a single regular expression replacement/substitution on strings in one or more  
@@ -233,4 +235,5 @@ public class RegexCodec extends AbstractSimpleCodec {
 	
 	/** Identifies the version of the API this plug-in was built against. */
 	public static final String CONNECTIVITY_API_VERSION = com.softwareag.connectivity.ConnectivityPlugin.CONNECTIVITY_API_VERSION;
+
 }

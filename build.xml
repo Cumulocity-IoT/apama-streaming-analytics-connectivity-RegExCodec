@@ -13,13 +13,16 @@
 		<javac includeantruntime="false" />
 	</presetdef>
 
+	
 	<property environment="env"/>
 	<property name="APAMA_HOME" location="${env.APAMA_HOME}"/>
 	<fail unless="env.APAMA_HOME" message="Please run the bin/apama_env script before attempting to build this sample."/>
 
 	<property name="output-dir" location="${basedir}/build-output"/>
-	<property name="output-jar" location="${output-dir}/regex-codec.jar"/>
+	<property name="output-jar" location="${output-dir}/regex-codec-sample.jar"/>
 	<tstamp/>
+	
+	<import file="../FileTransport/build.xml" />
 
 	<path id="plugin-classpath">
 		<fileset dir="${APAMA_HOME}/lib">
@@ -29,13 +32,10 @@
 	<pathconvert property="plugin-classpath.prop" refid="plugin-classpath" pathsep=" ">
 		<flattenmapper/>
 	</pathconvert>
-
-	<target name="clean">
-		<delete dir="${output-dir}"/>
-	</target>
 	
 	<!-- Targets for building -->
-	<target name="build" description="Build plugin" depends="clean">
+
+	<target name="build" description="Build plugin">
 		<delete dir="${output-dir}/work"/>
 		<mkdir dir="${output-dir}/work"/>
 		
@@ -53,7 +53,11 @@
 		</jar>
 	</target>
 	
-	<target name="copy" description="Build plugin and copy to APAMA_HOME/lib" depends="build">
-		<copy file="${output-jar}" todir="${env.APAMA_HOME}/lib/"/>
+	<target name="copy" description="Build plugin and copy to APAMA_WORK/lib" depends="build, file-transport-copy">
+		<copy file="${output-jar}" todir="${env.APAMA_WORK}/lib/"/>
+	</target>
+
+	<target name="clean">
+		<delete dir="${output-dir}"/>
 	</target>
 </project>
