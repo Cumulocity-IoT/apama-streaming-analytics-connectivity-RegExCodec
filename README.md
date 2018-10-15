@@ -83,6 +83,7 @@ When compared to input.txt, you'll notice that any numerical value within that w
  
 # Authors
 [Callum Attryde](mailto:Callum.Attryde@softwareag.com)
+
 [John Heath](mailto:John.Heath@softwareag.com)
 
 ______________________
