@@ -1,67 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <pysysproject>
-	<requires-pysys>1.5.1</requires-pysys>
+	<requires-pysys>1.6.0</requires-pysys>
 	<requires-python>3.7</requires-python>
 
+	<!-- User-defined properties (use lowerCamelCase for property names) -->
 
-	<project-help><!-- Project-specific text to be appended to the "pysys run -h". -->
-Apama options
--------------
--Xeplcoverage   Enable generation of a code coverage report showing which lines of EPL have been executed. 
-                See apama.runner for more information. 
-		
-	</project-help>
+	<!-- Use this property for the home directory of the application being tested. If your project needs building, this 
+	should be the build/deployment output directory. 
 	
-	<property root="testRootDir"/>
-	<property environment="env"/>
-	<property osfamily="osfamily"/>
-
-	<!-- Import ${...} properties from win32.properties or unix.properties file if they exist. -->
-	<property file="${osfamily}.properties" pathMustExist="false"/>
-
-	<!-- Define Apama install locations using environment variables. -->
-	<property name="APAMA_HOME"              value="${env.APAMA_HOME}" pathMustExist="true"/>
-	<property name="APAMA_WORK"              value="${env.APAMA_WORK}"/>
-	<property name="APAMA_COMMON_JRE"        value="${env.APAMA_JRE}"/> 
-
-	<!-- Specify a property for the location of the application being tested. 
-	Binaries and configuration files can be specified relative to this directory 
-	to avoid having to hardcode locations inside each individual testcase. 
+	You can refer to it in your tests like this: self.project.appHome+'/monitors/XXX.mon'
+	
+	It can be overridden with an environment variable if desired. 
 	-->
-	<property name="TEST_SUBJECT_DIR" value="${env.PYSYS_TEST_SUBJECT_DIR}" default="${testRootDir}/.."/>
+	<property name="appHome" value="${env.PYSYS_APP_HOME}" default="${testRootDir}/.." pathMustExist="true"/>
 
-	<!-- User-defined properties -->
+	<!-- Import OS-specific ${...} properties from pysys-windows.properties or pysys-unix.properties file if it exists. -->
+	<property file="pysys-${osfamily}.properties" pathMustExist="false"/>
 
-	<!-- Standard default settings. -->
-	<property name="defaultAbortOnError" value="true"/>	
-	<property name="defaultIgnoreExitStatus" value="false"/>
-	<property name="defaultEnvironsTempDir" value="self.output"/>
-	<property name="redirectPrintToLogger" value="false"/>
-	<property name="supportMultipleModesPerRun" value="true"/>
-	<property name="verboseWaitForGrep" value="true"/>
-	<property name="defaultAssertDiffStripWhitespace" value="false"/>
-	
-	<property name="shutdownApamaComponentsAfterTest" value="true"/>
-
-	<runner classname="ApamaRunner" module="apama.runner"/>
-	
-	<!-- Custom test framework extensions, if needed -->
+	<!-- Custom test framework plugins, if needed -->
 	<!--
-	<pythonpath value="../pysys-extensions" relative="true" />
-	<runner module="my.organization" classname="MyRunner" />
-	<maker  module="my.organization" classname="MyTestMaker" />
+	<pythonpath value="./pysys-extensions" />
+	<test-plugin   classname="myorg.plugins.MyTestPlugin" alias="myorg"/>
+	<runner-plugin classname="myorg.plugins.MyRunnerPlugin" alias="myorg"/>
 	-->
+
+	<!-- Apama install location -->
+	<property name="APAMA_HOME"         value="${env.APAMA_HOME}" pathMustExist="true"/>
+	<property name="APAMA_WORK"         value="${env.APAMA_WORK}" default=""/>
+	<property name="APAMA_COMMON_JRE"   value="${env.APAMA_JRE}"  default="${APAMA_HOME}/../jvm/jvm/jre"/> 
+	
+	<test-plugin classname="apama.testplugin.ApamaPlugin" alias="apama"/>	
 
 	<writers>
-		<writer classname="TravisCIWriter" module="pysys.writer.ci"></writer>
+		<writer classname="apama.coverage.EPLCoverageWriter">
+			<property name="destDir" value="__coverage_epl.${outDirName}"/>
+			
+			<!-- The following (optional) properties take a comma-separated list e.g. "**/foo/Bar*.mon, **/baz/*.mon".
+				See EPLCoverageWriter API documentation for details on these and other available configuration parameters.  
+			-->
+			<property name="srcIncludes" value=""/>
+			<property name="srcExcludes" value=""/>
+		</writer>
 
-		<writer classname="JUnitXMLResultsWriter" module="pysys.writer">
-			<property name="outputDir" value="${testRootDir}/pysys-junit-report"/>
+		<writer classname="pysys.writer.testoutput.TestOutputArchiveWriter">
+			<property name="destDir" value="__pysys_output_archives/"/>
+			<property name="maxTotalSizeMB" value="1024.0"/>
+			<property name="maxArchiveSizeMB" value="200.0"/>
+			<property name="maxArchives" value="50"/>
 		</writer>
 		
-		<writer classname="ConsoleSummaryResultsWriter" module="pysys.writer">
-			<property name="showOutputDir" value="false"/>
-			<property name="showOutcomeReason" value="true"/>
+		<writer classname="pysys.writer.ci.GitHubActionsCIWriter"></writer>
+		<writer classname="pysys.writer.ci.TravisCIWriter"></writer>
+
+		<writer classname="pysys.writer.outcomes.JUnitXMLResultsWriter">
+			<property name="outputDir" value="__pysys_junit_xml"/>
+		</writer>
+		
+		<writer classname="pysys.writer.console.ConsoleSummaryResultsWriter">
 		</writer>
 	</writers>
 
@@ -74,14 +69,9 @@ Apama options
 		
 		<default-file-encoding pattern="*.log" encoding="utf-8"/>
 	</default-file-encodings>	
-	
-	<formatters>
-		<formatter classname="ColorLogFormatter" module="pysys.utils.logutils" 
-			name="stdout" messagefmt="%(asctime)s %(levelname)-5s %(message)s" datefmt="%H:%M:%S">
-		</formatter>
 
-		<formatter classname="BaseLogFormatter" module="pysys.utils.logutils" 
-			name="runlog" messagefmt="%(asctime)s %(levelname)-5s %(message)s" datefmt=""/>
-	</formatters>
+	<!-- Project-specific text to be appended to the "pysys run -h". -->
+	<project-help>
+	</project-help>
 	
 </pysysproject>
