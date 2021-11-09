@@ -1,4 +1,12 @@
-# Copyright (c) 2017 Software AG, Darmstadt, Germany and/or its licensors 
+__pysys_title__   = r""" Configuration error messages and validation """
+#                        ================================================================================
+
+__pysys_purpose__ = r""" Demonstrates that the plug-in fails to start with an appropriate error message if the config is invalid.
+	"""
+
+__pysys_authors__ = "sample"
+
+# Copyright (c) 2017, 2021 Software AG, Darmstadt, Germany and/or its licensors 
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 #
 #   http://www.apache.org/licenses/LICENSE-2.0
