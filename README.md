@@ -92,7 +92,7 @@ When compared to input.txt, you'll notice that any numerical value within that w
 [John Heath](mailto:John.Heath@softwareag.com)
 
 ## License
-Copyright (c) 2017-2020 Software AG, Darmstadt, Germany and/or its licensors
+Copyright (c) 2017-2021 Software AG, Darmstadt, Germany and/or its licensors
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
 file except in compliance with the License. You may obtain a copy of the License at
