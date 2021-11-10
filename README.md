@@ -20,7 +20,7 @@ The RegEx codec is most easily built with the Apache ANT tool from the directory
 
 > ant 
  
-But if you do not have access to ANT, it will need to be built manually (along with the FileTransport):
+But if you do not have access to ANT, it will need to be built manually (along with the FileTransport sample):
 
 
 For Linux:
