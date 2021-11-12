@@ -1,4 +1,13 @@
-# Copyright (c) 2017 Software AG, Darmstadt, Germany and/or its licensors 
+__pysys_title__   = r""" Direction configuration, multiple regex instances, asymmetric directional regexes (also demo of supported options) """
+#                        ================================================================================
+
+__pysys_purpose__ = r""" Multiple instances of RegEx plugin which different config per direction.
+	Also demo other supported options
+	"""
+
+__pysys_authors__ = "sample"
+
+# Copyright (c) 2017, 2021 Software AG, Darmstadt, Germany and/or its licensors 
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 #
 #   http://www.apache.org/licenses/LICENSE-2.0
@@ -27,8 +36,10 @@ class PySysTest(BaseTest):
 		correlator.injectMonitorscript('Test.mon')
 
 		# wait until the output is on disk
-		self.waitForSignal('received.evt', expr="final message")
+		self.waitForGrep('received.evt', expr="final message")
+		self.waitForGrep('output.txt', expr="final message")
 		
 	def validate(self):
 		self.assertGrep('testcorrelator.out', expr=' (ERROR|FATAL) ', contains=False)
 		self.assertDiff('received.evt', 'ref-received.evt')
+		self.assertDiff('output.txt', 'ref-output.txt')

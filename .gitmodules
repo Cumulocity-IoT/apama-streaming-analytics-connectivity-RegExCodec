@@ -1,0 +1,3 @@
+[submodule "FileTransport"]
+	path = FileTransport
+	url = https://github.com/SoftwareAG/apama-streaming-analytics-connectivity-FileTransport.git

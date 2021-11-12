@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-	Copyright © 2017 Software AG, Darmstadt, Germany and/or its licensors
+	Copyright © 2017, 2021 Software AG, Darmstadt, Germany and/or its licensors
   
 	Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
   
@@ -22,7 +22,20 @@
 	<property name="output-jar" location="${output-dir}/regex-codec-sample.jar"/>
 	<tstamp/>
 	
-	<import file="../FileTransport/build.xml" />
+	<!--
+		If the subdir exists use it (submodule or manual)
+	-->
+	<condition property="FileTransportBuildScript" value="FileTransport/build.xml">
+		<available file="${basedir}/FileTransport" type="dir"/>
+	</condition>
+	<!--
+		If the subdir !exists assume in source and that it is located adjacent to this basedir
+	-->
+	<condition property="FileTransportBuildScript" value="../FileTransport/build.xml">
+		<not> <available file="${basedir}/FileTransport" type="dir"/> </not>
+	</condition>
+
+	<import file="${FileTransportBuildScript}" />
 
 	<path id="plugin-classpath">
 		<fileset dir="${APAMA_HOME}/lib">
