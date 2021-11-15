@@ -12,8 +12,11 @@ Running and building of the sample requires access to the Correlator and Apama c
 To ensure that the environment is configured correctly for Apama, all the commands below should be executed from an Apama Command Prompt, or from a shell or command prompt where the bin\apama_env script has been run (or sourced on Unix).
 
 ### To build
-The RegEx codec has a dependency on the [File Transport plugin](https://github.com/SoftwareAG/apama-streaming-analytics-connectivity-FileTransport) to build, which is a submodule of this repository. If the submodule is not populated after checking out, you may need to do an explicit update:
+The RegEx codec has a dependency on the [File Transport plugin](https://github.com/SoftwareAG/apama-streaming-analytics-connectivity-FileTransport) to build, which is a submodule of this repository. 
 
+If doing a clone, you can use the `--recurse-submodules` flag to automatically checkout the submodule.
+
+If you have already cloned, or the submodule hasn't been checked out, you may need to do an explicit update:
 > git submodule update --init --recursive
 
 The RegEx codec is most easily built with the Apache ANT tool from the directory containing 'build.xml':
@@ -87,9 +90,9 @@ Running the sample will produce one output file:
 When compared to input.txt, you'll notice that any numerical value within that was replaced with the string '<number>'. This transformation was defined in the .yaml file. If you run the test via the pysys framework, you can see the Apama events themselves, showing the input and the output value together. 
  
 # Authors
-[Callum Attryde](mailto:Callum.Attryde@softwareag.com)
+Callum Attryde
 
-[John Heath](mailto:John.Heath@softwareag.com)
+John Heath
 
 ## License
 Copyright (c) 2017-2021 Software AG, Darmstadt, Germany and/or its licensors
