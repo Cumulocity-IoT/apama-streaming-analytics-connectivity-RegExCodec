@@ -11,20 +11,35 @@ Running and building of the sample requires access to the Correlator and Apama c
 
 To ensure that the environment is configured correctly for Apama, all the commands below should be executed from an Apama Command Prompt, or from a shell or command prompt where the bin\apama_env script has been run (or sourced on Unix).
 
-### To build
-The RegEx codec has a dependency on the [File Transport plugin](https://github.com/SoftwareAG/apama-streaming-analytics-connectivity-FileTransport) to build, which is a submodule of this repository. 
+## Getting the source
+The RegEx codec has a dependency on the [File Transport plugin](https://github.com/SoftwareAG/apama-streaming-analytics-connectivity-FileTransport) to build.
 
-If doing a clone, you can use the `--recurse-submodules` flag to automatically checkout the submodule.
+For the sample to find the dependency, it has to be stored in a folder called "FileTransport" as either a sibling or child directory (with the child directory taking priority).
+
+The following instructions will cover how to set this up.
+
+### Using Git clone
+The preferred way is to use git clone, as File Transport is a submodule of this repository.
+
+When performing a clone, use the `--recurse-submodules` flag to automatically checkout the File Transport plugin.
+
+For example:
+> git clone --recurse-submodules https://github.com/SoftwareAG/apama-streaming-analytics-connectivity-RegExCodec.git
 
 If you have already cloned, or the submodule hasn't been checked out, you may need to do an explicit update:
 > git submodule update --init --recursive
 
+### Using "Download ZIP"
+GitHub does not automatically resolve submodules when downloading the repository as a ZIP file, so you will need to resolve it manually.
+
+Download the ZIP for this repository, extract it, and navigate into it. Now download the ZIP for the [File Transport plugin](https://github.com/SoftwareAG/apama-streaming-analytics-connectivity-FileTransport), and extract the contents of it into the empty "FileTransport" folder.
+
+## To build
 The RegEx codec is most easily built with the Apache ANT tool from the directory containing 'build.xml':
 
 > ant 
  
 But if you do not have access to ANT, it will need to be built manually (along with the FileTransport sample):
-
 
 For Linux:
 > mkdir build_output
@@ -95,7 +110,7 @@ Callum Attryde
 John Heath
 
 ## License
-Copyright (c) 2017-2021 Software AG, Darmstadt, Germany and/or its licensors
+Copyright (c) 2017-2022 Software AG, Darmstadt, Germany and/or its licensors
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
 file except in compliance with the License. You may obtain a copy of the License at
