@@ -32,8 +32,6 @@
 	<property name="APAMA_HOME"         value="${env.APAMA_HOME}" pathMustExist="true"/>
 	<property name="APAMA_WORK"         value="${env.APAMA_WORK}" default=""/>
 	
-	<test-plugin classname="apama.testplugin.ApamaPlugin" alias="apama"/>	
-
 	<writers>
 		<writer classname="apama.coverage.EPLCoverageWriter">
 			<property name="destDir" value="__coverage_epl.${outDirName}"/>
