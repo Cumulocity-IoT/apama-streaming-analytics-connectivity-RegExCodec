@@ -34,13 +34,19 @@
 	
 	<writers>
 		<writer classname="apama.coverage.EPLCoverageWriter">
+			<!-- See EPLCoverageWriter API documentation for details on these and other available configuration parameters. -->
 			<property name="destDir" value="__coverage_epl.${outDirName}"/>
 			
-			<!-- The following (optional) properties take a comma-separated list e.g. "**/foo/Bar*.mon, **/baz/*.mon".
-				See EPLCoverageWriter API documentation for details on these and other available configuration parameters.  
+
+			<!-- Path(s) to search for .mon source files that we may be testing -->
+			<property name="srcSearchDirs" value="${appHome}"/>
+
+			<!-- Comma-separated list of exclude patterns where there is no EPL source we want to measure coverage, 
+				or potentially large directories such as build output 
 			-->
+			<property name="srcExcludes" value="${appHome}/output*/**, ${appHome}/build*/**, ${testRootDir}/**"/>
+
 			<property name="srcIncludes" value=""/>
-			<property name="srcExcludes" value=""/>
 		</writer>
 
 		<writer classname="pysys.writer.testoutput.TestOutputArchiveWriter">
