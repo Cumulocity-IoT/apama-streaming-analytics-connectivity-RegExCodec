@@ -6,7 +6,7 @@ __pysys_purpose__ = r""" Demonstrates that the plug-in fails to start with an ap
 
 __pysys_authors__ = "sample"
 
-# Copyright (c) 2017, 2021 Software AG, Darmstadt, Germany and/or its licensors 
+# Copyright (c) 2017, 2021 Cumulocity GmbH, Duesseldorf, Germany and/or its affiliates and/or their licensors. 
 # Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
 #
 #   http://www.apache.org/licenses/LICENSE-2.0

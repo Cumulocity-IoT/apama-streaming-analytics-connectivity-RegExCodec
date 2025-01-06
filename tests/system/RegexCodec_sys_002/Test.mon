@@ -1,4 +1,4 @@
-package com.softwareag.samples;
+package com.apama.samples;
 
 using com.softwareag.connectivity.ConnectivityPlugins;
 

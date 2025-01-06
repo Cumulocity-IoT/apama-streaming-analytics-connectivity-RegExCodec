@@ -2,11 +2,11 @@ plugins:
   FileTransport:
     classpath:
       - ${APAMA_WORK}/lib/file-transport-plugins.jar
-    class: com.softwareag.samples.FileTransport
+    class: com.apama.samples.FileTransport
     
   RegexCodec:
     classpath: ${APAMA_WORK}/lib/regex-codec-sample.jar
-    class: com.softwareag.samples.RegexCodec
+    class: com.apama.samples.RegexCodec
 
 
 startChains:
