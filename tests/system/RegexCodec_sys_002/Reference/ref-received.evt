@@ -1,2 +1,2 @@
-com.softwareag.samples.Test("a 987 b","a numberTowardsHost<987> b")
-com.softwareag.samples.Test("final message","final message")
+com.apama.samples.Test("a 987 b","a numberTowardsHost<987> b")
+com.apama.samples.Test("final message","final message")
