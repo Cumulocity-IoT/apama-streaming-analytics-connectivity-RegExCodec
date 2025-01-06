@@ -2,7 +2,7 @@
 Java based Connectivity Codec for performing regular expression operations on messages for use with [Apama](https://www.apamacommunity.com/).
 
 ## Description
-Applies a regular expression on the given event map data. For more information on the Apama Connectivity Framework, as well as Apama in general, please see [the community website](https://www.apamacommunity.com/). Furthermore, if you wish to examine this plugin in more detail, [a blog describing it also exists](https://www.apamacommunity.com/creating-your-own-regex-plug-in/).
+Applies a regular expression on the given event map data. For more information on the Apama Connectivity Framework, as well as Apama in general, please see [the community website](https://www.apamacommunity.com/). Furthermore, if you wish to examine this plugin in more detail, a blog describing it also exists called "creating-your-own-regex-plug-in".
 
 ## Set-up
 First, ensure you have an install of the Apama engine; a free edition is available at [the community website](https://www.apamacommunity.com/). This plugin assumes the user has familiarity with the basic structure of the install, more information of which can also be found on the community site.
@@ -62,11 +62,11 @@ These should have already been copied to APAMA_WORK/lib where the correlator wil
 To run the sample, you will also need to have built the [File Transport](https://github.com/Cumulocity-IoT/apama-streaming-analytics-connectivity-FileTransport) to create a full connectivity chain.
 
 ## Running the sample
-You can either run the sample via the [Pysys](https://sourceforge.net/projects/pysys/files/pysys/) framework by invoking the tests, or by passing the yaml Connectivity configuration file to the Correlator.
+You can either run the sample via the [Pysys](https://pysys-test.github.io/pysys-test/) framework by invoking the tests, or by passing the yaml Connectivity configuration file to the Correlator.
 
 When run, the sample creates a connectivity plugin chain.  The chain will have the correlator at one end and to access the 'ouside world', a plugin chain must end with a Transport.  For this sample we use the File Transport which can read in data from a file to be passed towards the host correlator, or write data out to a file that has come from the host correlator.  Between the File Transport and the correlator is the RegEx Plugin which uses regular expressions to perform replacements on payload fields.
 
-To run via [Pysys](https://sourceforge.net/projects/pysys/files/pysys/), go to the tests directory and invoke the command: 
+To run via [Pysys](https://pysys-test.github.io/pysys-test/), go to the tests directory and invoke the command: 
   
   pysys run
 
