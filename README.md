@@ -96,7 +96,7 @@ Running the sample will produce one output file:
 When compared to input.txt, you'll notice that any numerical value within that was replaced with the string '<number>'. This transformation was defined in the .yaml file. If you run the test via the pysys framework, you can see the Apama events themselves, showing the input and the output value together. 
 
 ## License
-Copyright (c) 2017-2022 Cumulocity GmbH, Duesseldorf, Germany and/or its affiliates and/or their licensors.
+Copyright (c) 2017-present Cumulocity GmbH, Duesseldorf, Germany and/or its affiliates and/or their licensors.
 Copyright (c) 2024 Cumulocity GmbH. The name Cumulocity GmbH and all Cumulocity GmbH product names are either trademarks or registered trademarks of Cumulocity GmbH and/or its subsidiaries and/or its affiliates and/or their licensors. Other company and product names mentioned herein may be trademarks of their respective owners. 
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this
